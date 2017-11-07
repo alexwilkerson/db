@@ -4,7 +4,17 @@ from person natural join works natural join job
 where comp_id = '8' and end_date is null;
 
 -- 2. List a company’s staff by salary in descending order.
+select per_name, pay_rate
+from person natural join works natural join job
+where comp_id = '8' and pay_type = 'salary'
+order by pay_rate DESC;
+
 -- 3. List companies’ labor cost (total salaries and wage rates by 1920 hours) in descending order.
+-- 4. Find all the jobs a person is currently holding and worked in the past.
+select title
+from person natural join works natural join has_category natural join job_category
+where per_id = '1';
+
 -- 5. List a person’s knowledge/skills in a readable format.
 -- 6. List the skill gap of a worker between his/her job(s) and his/her skills.
 -- 7. List the required knowledge/skills of a job/ a job category in a readable format. (two queries)
