@@ -1,0 +1,5 @@
+Insert into PERSON (PER_ID,PER_NAME,APT_NUMBER,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,EMAIL,GENDER) values (1,'Carlin Bremer',null,1803,'Broad Brook Crest','Metairie','LA',70001,'carbre@gmail.com','male');
+Insert into PERSON (PER_ID,PER_NAME,APT_NUMBER,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,EMAIL,GENDER) values (2,'Sir Prancelot Brainfire',null,666,'Everend Drive','Kenner','LA',70065,'prace_a_lot@aol.com','male');
+Insert into PERSON (PER_ID,PER_NAME,APT_NUMBER,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,EMAIL,GENDER) values (3,'Janak Tucci',null,6734,'Green Rise Grounds','New Orleans','LA',70115,'ja.tucci@gmail.com','female');
+Insert into PERSON (PER_ID,PER_NAME,APT_NUMBER,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,EMAIL,GENDER) values (4,'Sylvia Boler',null,1519,'Cinder Concession','New Orleans','LA',70122,'deep_lover69@gmail.com','female');
+Insert into PERSON (PER_ID,PER_NAME,APT_NUMBER,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,EMAIL,GENDER) values (5,'Robert Christmas','2B',648,'Fire Circle','Gretna','LA',70053,'wingmanPro@yahoo.net','male');

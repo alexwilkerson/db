@@ -1,0 +1,10 @@
+Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('1','Diaper Computer Man','You get to work with poop and computers.',60000,85000,null);
+Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('2','Sister Computer Worker','Work as a computer sister.',11,12,null);
+Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('3','Social Media Analyst','Work deeply with many facial bonking algorithms.',40000,50000,null);
+Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('4','Senior Computer Guy','Become prestigious in your field as a Senior Computer Guy.',25,26,'1');
+Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('5','Computer Employee','Work well with computers.',65000,150000,null);
+Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('6','Intense Big Data Analyst','Use massive algorithms to awaken machines.',75000,500000,null);
+Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('7','Exclusive Data Mover','Mover data from one desk to another desk.',40,50,null);
+Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('8','Electronic Writer Person','Write about electronic things.',60000,75000,null);
+Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('9','Computer Savior','Fight for the machines!',62000,80000,null);
+Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('10','Luddite','Get away from computers',85000,95000,'5');

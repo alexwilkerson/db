@@ -1,0 +1,10 @@
+Insert into JOB (JOB_CODE,COMP_ID,EMP_MODE,PAY_RATE,PAY_TYPE) values ('1','2','full-time',80000,'salary');
+Insert into JOB (JOB_CODE,COMP_ID,EMP_MODE,PAY_RATE,PAY_TYPE) values ('2','1','part-time',12,'wage');
+Insert into JOB (JOB_CODE,COMP_ID,EMP_MODE,PAY_RATE,PAY_TYPE) values ('3','10','full-time',40000,'salary');
+Insert into JOB (JOB_CODE,COMP_ID,EMP_MODE,PAY_RATE,PAY_TYPE) values ('4','4','part-time',25,'wage');
+Insert into JOB (JOB_CODE,COMP_ID,EMP_MODE,PAY_RATE,PAY_TYPE) values ('5','8','full-time',100000,'salary');
+Insert into JOB (JOB_CODE,COMP_ID,EMP_MODE,PAY_RATE,PAY_TYPE) values ('6','9','full-time',81000,'salary');
+Insert into JOB (JOB_CODE,COMP_ID,EMP_MODE,PAY_RATE,PAY_TYPE) values ('7','3','full-time',45,'wage');
+Insert into JOB (JOB_CODE,COMP_ID,EMP_MODE,PAY_RATE,PAY_TYPE) values ('8','6','full-time',65000,'salary');
+Insert into JOB (JOB_CODE,COMP_ID,EMP_MODE,PAY_RATE,PAY_TYPE) values ('9','7','full-time',70000,'salary');
+Insert into JOB (JOB_CODE,COMP_ID,EMP_MODE,PAY_RATE,PAY_TYPE) values ('10','5','full-time',90000,'salary');

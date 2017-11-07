@@ -1,0 +1,10 @@
+Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('1','Two Sisters',236,'Weird Way','New Orleans','LA',70112,'oil and mining','twosisters.com');
+Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('2','The Diaper Exchange',246,'Poop Street','New Orleans','LA',70115,'entertainment','poophere.org');
+Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('3','Brandon, Inc.',24,'Brandon Drive','Brandon','LA',70178,'entertainment','brandon.com');
+Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('4','The Bradon Bros.',727,'Brandon Avenue','Brandon','LA',70178,'education','brandons.net');
+Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('5','Panda Expressions',5278,'Silly Banana Circle','Metairie','LA',70001,'entertainment','smellthatish.com');
+Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('6','Dungeons and Magazines',11536,'Dancing Way','New Orleans','LA',70122,'computer hardware','rollmag.io');
+Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('7','Help Save Me Co.',587,'This Place','Kenner','LA',70065,'life services','helpsave.me');
+Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('8','Computer Co.',37,'1001011 Avenue','New Orleans','LA',70118,'computer hardware','computer.co');
+Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('9','Gooble',458,'Broadway','New Orleans','LA',70112,'big data','gooble.com');
+Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('10','Facebonk',62,'Main Street','Gretna','LA',70053,'social network','facebonk.com');

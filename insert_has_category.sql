@@ -1,0 +1,10 @@
+Insert into HAS_CATEGORY (CATE_CODE,JOB_CODE) values ('1','2');
+Insert into HAS_CATEGORY (CATE_CODE,JOB_CODE) values ('10','3');
+Insert into HAS_CATEGORY (CATE_CODE,JOB_CODE) values ('2','1');
+Insert into HAS_CATEGORY (CATE_CODE,JOB_CODE) values ('3','7');
+Insert into HAS_CATEGORY (CATE_CODE,JOB_CODE) values ('4','4');
+Insert into HAS_CATEGORY (CATE_CODE,JOB_CODE) values ('5','10');
+Insert into HAS_CATEGORY (CATE_CODE,JOB_CODE) values ('6','8');
+Insert into HAS_CATEGORY (CATE_CODE,JOB_CODE) values ('7','9');
+Insert into HAS_CATEGORY (CATE_CODE,JOB_CODE) values ('8','5');
+Insert into HAS_CATEGORY (CATE_CODE,JOB_CODE) values ('9','6');
