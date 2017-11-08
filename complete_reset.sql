@@ -54,7 +54,7 @@ create table phone(
 
 create table company(
     comp_id varchar(8),
-    name varchar(100),
+    comp_name varchar(100),
     street_number numeric(10,0),
     street_name varchar(100),
     city varchar(100),
@@ -87,7 +87,7 @@ create table works(
 
 create table naics(
     naics_code numeric(6,0),
-    title varchar(100),
+    naics_title varchar(100),
     primary key(naics_code)
 );
 
@@ -100,8 +100,8 @@ create table company_naics(
 
 create table job_category(
     cate_code varchar(8),
-    title varchar(100),
-    description varchar(255),
+    cate_title varchar(100),
+    cate_description varchar(255),
     pay_range_high numeric(8,2) check (pay_range_high > 0),
     pay_range_low numeric(8,2) check (pay_range_low > 0),
     parent_cate varchar(8),
@@ -117,8 +117,8 @@ create table has_parent(
 
 create table certificate(
     cert_code varchar(20),
-    title varchar(100) not null,
-    description varchar(500),
+    cert_title varchar(100) not null,
+    cert_description varchar(500),
     expire_date date,
     issued_by varchar(20),
     t_code varchar(20),
@@ -127,9 +127,9 @@ create table certificate(
 
 create table course(
     c_code varchar(8),
-    title varchar(100),
+    c_title varchar(100),
     c_level varchar(8) check(c_level = 'beginner' or c_level = 'medium' or c_level = 'advanced'),
-    description varchar(500),
+    c_description varchar(500),
     status varchar(6) check(status = 'expired' or status ='active'),
     retail_price numeric(8,2) check (retail_price > 0),
     primary key(c_code)
@@ -219,8 +219,8 @@ create table teaches_skill(
 
 create table knowledge_skill(
     ks_code varchar(8),
-    title varchar(100) not null,
-    description varchar(500),
+    ks_title varchar(100) not null,
+    ks_description varchar(500),
     ks_level varchar(8) check(ks_level = 'beginner' or ks_level = 'medium' or ks_level = 'advanced'),
     primary key(ks_code)
 );
@@ -250,6 +250,8 @@ create table preferred_skill(
 );
 
 
+
+
 --------------------------------------
 -- INSERT ALL TABLE DATA
 --------------------------------------
@@ -271,16 +273,16 @@ Insert into PHONE (PER_ID,PHONE,P_TYPE) values (4,'504-911-9111','home');
 Insert into PHONE (PER_ID,PHONE,P_TYPE) values (5,'504-222-2222','cell');
 
 -- COMPANY --
-Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('1','Two Sisters',236,'Weird Way','New Orleans','LA',70112,'oil and mining','twosisters.com');
-Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('2','The Diaper Exchange',246,'Poop Street','New Orleans','LA',70115,'entertainment','poophere.org');
-Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('3','Brandon, Inc.',24,'Brandon Drive','Brandon','LA',70178,'entertainment','brandon.com');
-Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('4','The Bradon Bros.',727,'Brandon Avenue','Brandon','LA',70178,'education','brandons.net');
-Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('5','Panda Expressions',5278,'Silly Banana Circle','Metairie','LA',70001,'entertainment','smellthatish.com');
-Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('6','Dungeons and Magazines',11536,'Dancing Way','New Orleans','LA',70122,'computer hardware','rollmag.io');
-Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('7','Help Save Me Co.',587,'This Place','Kenner','LA',70065,'life services','helpsave.me');
-Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('8','Computer Co.',37,'1001011 Avenue','New Orleans','LA',70118,'computer hardware','computer.co');
-Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('9','Gooble',458,'Broadway','New Orleans','LA',70112,'big data','gooble.com');
-Insert into COMPANY (COMP_ID,NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('10','Facebonk',62,'Main Street','Gretna','LA',70053,'social network','facebonk.com');
+Insert into COMPANY (COMP_ID,COMP_NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('1','Two Sisters',236,'Weird Way','New Orleans','LA',70112,'oil and mining','twosisters.com');
+Insert into COMPANY (COMP_ID,COMP_NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('2','The Diaper Exchange',246,'Poop Street','New Orleans','LA',70115,'entertainment','poophere.org');
+Insert into COMPANY (COMP_ID,COMP_NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('3','Brandon, Inc.',24,'Brandon Drive','Brandon','LA',70178,'entertainment','brandon.com');
+Insert into COMPANY (COMP_ID,COMP_NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('4','The Bradon Bros.',727,'Brandon Avenue','Brandon','LA',70178,'education','brandons.net');
+Insert into COMPANY (COMP_ID,COMP_NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('5','Panda Expressions',5278,'Silly Banana Circle','Metairie','LA',70001,'entertainment','smellthatish.com');
+Insert into COMPANY (COMP_ID,COMP_NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('6','Dungeons and Magazines',11536,'Dancing Way','New Orleans','LA',70122,'computer hardware','rollmag.io');
+Insert into COMPANY (COMP_ID,COMP_NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('7','Help Save Me Co.',587,'This Place','Kenner','LA',70065,'life services','helpsave.me');
+Insert into COMPANY (COMP_ID,COMP_NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('8','Computer Co.',37,'1001011 Avenue','New Orleans','LA',70118,'computer hardware','computer.co');
+Insert into COMPANY (COMP_ID,COMP_NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('9','Gooble',458,'Broadway','New Orleans','LA',70112,'big data','gooble.com');
+Insert into COMPANY (COMP_ID,COMP_NAME,STREET_NUMBER,STREET_NAME,CITY,STATE,ZIP_CODE,PRIMARY_SECTOR,WEBSITE) values ('10','Facebonk',62,'Main Street','Gretna','LA',70053,'social network','facebonk.com');
 
 -- JOB --
 Insert into JOB (JOB_CODE,COMP_ID,EMP_MODE,PAY_RATE,PAY_TYPE) values ('1','2','full-time',80000,'salary');
@@ -309,14 +311,14 @@ Insert into WORKS (JOB_CODE,PER_ID,START_DATE,END_DATE) values ('4',5,to_date('1
 Insert into WORKS (JOB_CODE,PER_ID,START_DATE,END_DATE) values ('6',5,to_date('15-FEB-14','DD-MON-RR'),to_date('21-NOV-15','DD-MON-RR'));
 
 -- NAICS --
-Insert into NAICS (NAICS_CODE,TITLE) values (511210,'Software Publishers');
-Insert into NAICS (NAICS_CODE,TITLE) values (518210,'Data Processing, Hosting, and Related Services');
-Insert into NAICS (NAICS_CODE,TITLE) values (541511,'Custom Computer Programming Services');
-Insert into NAICS (NAICS_CODE,TITLE) values (541512,'Computer Systems Design Services');
-Insert into NAICS (NAICS_CODE,TITLE) values (541513,'Computer Facilities Management Services');
-Insert into NAICS (NAICS_CODE,TITLE) values (541519,'Other Computer Related Services');
-Insert into NAICS (NAICS_CODE,TITLE) values (541715,'Research and Development in the Physical, Engineering, and Life Sciences');
-Insert into NAICS (NAICS_CODE,TITLE) values (611420,'Computer Training');
+Insert into NAICS (NAICS_CODE,NAICS_TITLE) values (511210,'Software Publishers');
+Insert into NAICS (NAICS_CODE,NAICS_TITLE) values (518210,'Data Processing, Hosting, and Related Services');
+Insert into NAICS (NAICS_CODE,NAICS_TITLE) values (541511,'Custom Computer Programming Services');
+Insert into NAICS (NAICS_CODE,NAICS_TITLE) values (541512,'Computer Systems Design Services');
+Insert into NAICS (NAICS_CODE,NAICS_TITLE) values (541513,'Computer Facilities Management Services');
+Insert into NAICS (NAICS_CODE,NAICS_TITLE) values (541519,'Other Computer Related Services');
+Insert into NAICS (NAICS_CODE,NAICS_TITLE) values (541715,'Research and Development in the Physical, Engineering, and Life Sciences');
+Insert into NAICS (NAICS_CODE,NAICS_TITLE) values (611420,'Computer Training');
 
 -- COMPANY_NAICS --
 Insert into COMPANY_NAICS (COMP_ID,NAICS_CODE) values ('1',541519);
@@ -331,16 +333,16 @@ Insert into COMPANY_NAICS (COMP_ID,NAICS_CODE) values ('8',541512);
 Insert into COMPANY_NAICS (COMP_ID,NAICS_CODE) values ('9',518210);
 
 -- JOB_CATEGORY --
-Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('1','Diaper Computer Man','You get to work with poop and computers.',60000,85000,null);
-Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('2','Sister Computer Worker','Work as a computer sister.',11,12,null);
-Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('3','Social Media Analyst','Work deeply with many facial bonking algorithms.',40000,50000,null);
-Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('4','Senior Computer Guy','Become prestigious in your field as a Senior Computer Guy.',25,26,'1');
-Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('5','Computer Employee','Work well with computers.',65000,150000,null);
-Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('6','Intense Big Data Analyst','Use massive algorithms to awaken machines.',75000,500000,null);
-Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('7','Exclusive Data Mover','Mover data from one desk to another desk.',40,50,null);
-Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('8','Electronic Writer Person','Write about electronic things.',60000,75000,null);
-Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('9','Computer Savior','Fight for the machines!',62000,80000,null);
-Insert into JOB_CATEGORY (CATE_CODE,TITLE,DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('10','Luddite','Get away from computers',85000,95000,'5');
+Insert into JOB_CATEGORY (CATE_CODE,CATE_TITLE,CATE_DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('1','Diaper Computer Man','You get to work with poop and computers.',60000,85000,null);
+Insert into JOB_CATEGORY (CATE_CODE,CATE_TITLE,CATE_DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('2','Sister Computer Worker','Work as a computer sister.',11,12,null);
+Insert into JOB_CATEGORY (CATE_CODE,CATE_TITLE,CATE_DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('3','Social Media Analyst','Work deeply with many facial bonking algorithms.',40000,50000,null);
+Insert into JOB_CATEGORY (CATE_CODE,CATE_TITLE,CATE_DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('4','Senior Computer Guy','Become prestigious in your field as a Senior Computer Guy.',25,26,'1');
+Insert into JOB_CATEGORY (CATE_CODE,CATE_TITLE,CATE_DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('5','Computer Employee','Work well with computers.',65000,150000,null);
+Insert into JOB_CATEGORY (CATE_CODE,CATE_TITLE,CATE_DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('6','Intense Big Data Analyst','Use massive algorithms to awaken machines.',75000,500000,null);
+Insert into JOB_CATEGORY (CATE_CODE,CATE_TITLE,CATE_DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('7','Exclusive Data Mover','Mover data from one desk to another desk.',40,50,null);
+Insert into JOB_CATEGORY (CATE_CODE,CATE_TITLE,CATE_DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('8','Electronic Writer Person','Write about electronic things.',60000,75000,null);
+Insert into JOB_CATEGORY (CATE_CODE,CATE_TITLE,CATE_DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('9','Computer Savior','Fight for the machines!',62000,80000,null);
+Insert into JOB_CATEGORY (CATE_CODE,CATE_TITLE,CATE_DESCRIPTION,PAY_RANGE_HIGH,PAY_RANGE_LOW,PARENT_CATE) values ('10','Luddite','Get away from computers',85000,95000,'5');
 
 -- HAS_PARENT --
 Insert into HAS_PARENT (CATE_CODE,PARENT_CATE) values ('10','5');
@@ -349,24 +351,24 @@ Insert into HAS_PARENT (CATE_CODE,PARENT_CATE) values ('4','1');
 -- CERTIFICATE --
 
 -- COURSE --
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('MATH1115','College Algebra','beginner','Real numbers and equations, functions, polynomial functions and graphs, exponential and logarithmic functions. A strong component of this course will be applications taken from different areas of concentration.','active',791);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI1583','Software Design and Development I','beginner','An introduction to software design and development using an object-oriented approach','active',791);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('COM2020','Business Communication I','beginner','Convey technical content to any audience through specific, clear and concise writing','active',1200);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('LSAT1001','Linux System Administration Training I','beginner','Our comprehensive Linux best practices courses are the best way for system administrators to get the advanced Linux system administration training and Linux security training they need to keep their IT infrastructure secure and operating at optimal levels.','active',500);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('BUSI2020','Business Communication I','beginner','Convey technical content to any audience through specific, clear and concise writing','active',700);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('UDW1000','Front-End Web Developer','beginner','Introduction to Front-End Web Development','active',2400);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI1581','Software Design and Development I Laboratory','beginner','Applications, exercises, and explorations in methodologies, software design, and development','active',791);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI2120','Software Design and Development II','medium','A continuation of CSCI 1583 and 1581 with emphasis on algorithmic techniques and the structuring of larger systems.','active',791);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI2121','Software Design and Development II Laboratory','medium','Applications, exercises, and explorations in methodologies for software design and development.','active',791);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI2125','Data Structures','medium','A continuation of CSCI 2120 and 2121 with emphasis on the design and implementation of structured data objects','active',791);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI2450','Machine Structure and Assembly Language Programming','medium','Assembly language programming and a survey of computer organization.','active',791);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI2467','Systems Programming Concepts','medium',' Introduction to the concepts and tools used in systems programming. ','active',657);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI3301','Computer Organization','medium','Processor design and performance evaluation.','active',512);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI4101','Analysis of Algorithms','advanced','Precise definition of the concept of an algorithm; techniques for algorithm verification; analyzing algorithm performance; applications to practical algorithms.','active',791);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI4125','Data Models and Database Systems','advanced','Methods, structures, and algorithms used for the organization, representation, and manipulation of large data bases','active',534);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI4350','Distributed Software Engineering','advanced','A study of the concepts, the methodology, the models, and methods that address problems in the development of distributed-software applications with emphasis on distributed-object models and components.','active',627);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI4401','Principles of Operating Systems I','advanced','An introduction to the organization of various types of operating systems; machine structure and the functions of an operating system; multiprogramming and time-sharing environments.','active',680);
-Insert into COURSE (C_CODE,TITLE,C_LEVEL,DESCRIPTION,STATUS,RETAIL_PRICE) values ('N/A','No prereq required.','beginner','No prereq required.','active',1);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('MATH1115','College Algebra','beginner','Real numbers and equations, functions, polynomial functions and graphs, exponential and logarithmic functions. A strong component of this course will be applications taken from different areas of concentration.','active',791);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI1583','Software Design and Development I','beginner','An introduction to software design and development using an object-oriented approach','active',791);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('COM2020','Business Communication I','beginner','Convey technical content to any audience through specific, clear and concise writing','active',1200);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('LSAT1001','Linux System Administration Training I','beginner','Our comprehensive Linux best practices courses are the best way for system administrators to get the advanced Linux system administration training and Linux security training they need to keep their IT infrastructure secure and operating at optimal levels.','active',500);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('BUSI2020','Business Communication I','beginner','Convey technical content to any audience through specific, clear and concise writing','active',700);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('UDW1000','Front-End Web Developer','beginner','Introduction to Front-End Web Development','active',2400);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI1581','Software Design and Development I Laboratory','beginner','Applications, exercises, and explorations in methodologies, software design, and development','active',791);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI2120','Software Design and Development II','medium','A continuation of CSCI 1583 and 1581 with emphasis on algorithmic techniques and the structuring of larger systems.','active',791);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI2121','Software Design and Development II Laboratory','medium','Applications, exercises, and explorations in methodologies for software design and development.','active',791);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI2125','Data Structures','medium','A continuation of CSCI 2120 and 2121 with emphasis on the design and implementation of structured data objects','active',791);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI2450','Machine Structure and Assembly Language Programming','medium','Assembly language programming and a survey of computer organization.','active',791);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI2467','Systems Programming Concepts','medium',' Introduction to the concepts and tools used in systems programming. ','active',657);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI3301','Computer Organization','medium','Processor design and performance evaluation.','active',512);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI4101','Analysis of Algorithms','advanced','Precise definition of the concept of an algorithm; techniques for algorithm verification; analyzing algorithm performance; applications to practical algorithms.','active',791);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI4125','Data Models and Database Systems','advanced','Methods, structures, and algorithms used for the organization, representation, and manipulation of large data bases','active',534);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI4350','Distributed Software Engineering','advanced','A study of the concepts, the methodology, the models, and methods that address problems in the development of distributed-software applications with emphasis on distributed-object models and components.','active',627);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('CSCI4401','Principles of Operating Systems I','advanced','An introduction to the organization of various types of operating systems; machine structure and the functions of an operating system; multiprogramming and time-sharing environments.','active',680);
+Insert into COURSE (C_CODE,C_TITLE,C_LEVEL,C_DESCRIPTION,STATUS,RETAIL_PRICE) values ('N/A','No prereq required.','beginner','No prereq required.','active',1);
 
 -- SECTION --
 Insert into SECTION (C_CODE,SEC_NO,YEAR,COMPLETE_DATE,OFFERED_BY,FORMAT) values ('COM2020','1',2015,to_date('12-AUG-15','DD-MON-RR'),'university','classroom');
@@ -554,36 +556,36 @@ Insert into TEACHES_SKILL (KS_CODE,C_CODE) values ('9','CSCI3301');
 Insert into TEACHES_SKILL (KS_CODE,C_CODE) values ('9','CSCI4401');
 
 -- KNOWLEDGE_SKILL --
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('1','Adobe Photoshop',' An image editing software developed and manufactured by Adobe Systems Inc. Photoshop is considered one of the leaders in photo editing software. ','beginner');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('2','C++','C++ is a general-purpose object-oriented programming (OOP) language, developed by Bjarne Stroustrup, and is an extension of the C language.','advanced');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('3','BASH','Bash is a Unix shell and command language written by Brian Fox for the GNU Project as a free software replacement for the Bourne shell.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('4','HTML','First developed by Tim Berners-Lee in 1990, HTML is short for HyperText Markup Language. HTML is used to create electronic documents (called pages) that are displayed on the World Wide Web.','beginner');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('5','Git','Git is a version control system for tracking changes in computer files.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('6','Java','Java is a general purpose, high-level programming language developed by Sun Microsystems.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('7','jQuery','jQuery is a cross-platform JavaScript library designed to simplify the client-side scripting of HTML.','beginner');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('8','Javascript','Javascript is a high-level, dynamic, weakly typed, prototype-based, multi-paradigm, and interpreted programming language.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('9','C','C is a general-purpose, imperative computer programming language.','advanced');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('10','Linux','Linux is a name which broadly denotes a family of free and open-source software operating system distributions built around the Linux kernel.','advanced');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('11','MacIntosh OS','MacIntosh OS is the current series of Unix-based graphical operating systems developed and marketed by Apple Inc. designed to run on Apple''s Macintosh computers ("Macs").','beginner');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('12','JDBC','JDBC is an application programming interface (API) for the programming language Java, which defines how a client may access a database.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('13','Oracle','Oracle is a relational database management system.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('14','MySQL','MySQLis a relational database management system','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('15','Microsoft Word','Microsoft Word is a word processor developed by Microsoft.','beginner');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('16','MongoDB','MongoDB is a free and open-source cross-platform document-oriented database program.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('17','Swift','Swift is a programming language developed by Apple Inc.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('18','Go','Go a programming language developed by Google.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('19','Haskell','Haskell is a standardized pure functional programming language with non-strict semantics.','advanced');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('20','Wireshark','Wireshark is a free and open source packet analyzer.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('21','YouTube','YouTube is an American video-sharing website.','beginner');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('22','Unix','Unix is a family of multitasking, multiuser computer operating systems that derive from the original ATT Unix.','advanced');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('23','Python','Python is a programming language.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('24','Microsoft Windows','Microsoft Windows, or simply Windows, is a metafamily of graphical operating systems developed, marketed, and sold by Microsoft.','beginner');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('25','Mobile Application Design','The development of mobile applications.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('26','Heroku','Heroku is a cloud platform as a service (PaaS) supporting several programming languages that is used as a web application deployment model.','beginner');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('27','Facebook','Facebook is a social media website.','beginner');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('28','Database Software','General relational database and software knowledge.','medium');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('29','CSS','Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a document written in a markup language.','beginner');
-Insert into KNOWLEDGE_SKILL (KS_CODE,TITLE,DESCRIPTION,KS_LEVEL) values ('30','VMWare','VMWare is a company that provides cloud computing and platform virtualization software and services.','beginner');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('1','Adobe Photoshop',' An image editing software developed and manufactured by Adobe Systems Inc. Photoshop is considered one of the leaders in photo editing software. ','beginner');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('2','C++','C++ is a general-purpose object-oriented programming (OOP) language, developed by Bjarne Stroustrup, and is an extension of the C language.','advanced');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('3','BASH','Bash is a Unix shell and command language written by Brian Fox for the GNU Project as a free software replacement for the Bourne shell.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('4','HTML','First developed by Tim Berners-Lee in 1990, HTML is short for HyperText Markup Language. HTML is used to create electronic documents (called pages) that are displayed on the World Wide Web.','beginner');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('5','Git','Git is a version control system for tracking changes in computer files.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('6','Java','Java is a general purpose, high-level programming language developed by Sun Microsystems.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('7','jQuery','jQuery is a cross-platform JavaScript library designed to simplify the client-side scripting of HTML.','beginner');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('8','Javascript','Javascript is a high-level, dynamic, weakly typed, prototype-based, multi-paradigm, and interpreted programming language.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('9','C','C is a general-purpose, imperative computer programming language.','advanced');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('10','Linux','Linux is a name which broadly denotes a family of free and open-source software operating system distributions built around the Linux kernel.','advanced');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('11','MacIntosh OS','MacIntosh OS is the current series of Unix-based graphical operating systems developed and marketed by Apple Inc. designed to run on Apple''s Macintosh computers ("Macs").','beginner');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('12','JDBC','JDBC is an application programming interface (API) for the programming language Java, which defines how a client may access a database.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('13','Oracle','Oracle is a relational database management system.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('14','MySQL','MySQLis a relational database management system','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('15','Microsoft Word','Microsoft Word is a word processor developed by Microsoft.','beginner');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('16','MongoDB','MongoDB is a free and open-source cross-platform document-oriented database program.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('17','Swift','Swift is a programming language developed by Apple Inc.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('18','Go','Go a programming language developed by Google.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('19','Haskell','Haskell is a standardized pure functional programming language with non-strict semantics.','advanced');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('20','Wireshark','Wireshark is a free and open source packet analyzer.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('21','YouTube','YouTube is an American video-sharing website.','beginner');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('22','Unix','Unix is a family of multitasking, multiuser computer operating systems that derive from the original ATT Unix.','advanced');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('23','Python','Python is a programming language.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('24','Microsoft Windows','Microsoft Windows, or simply Windows, is a metafamily of graphical operating systems developed, marketed, and sold by Microsoft.','beginner');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('25','Mobile Application Design','The development of mobile applications.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('26','Heroku','Heroku is a cloud platform as a service (PaaS) supporting several programming languages that is used as a web application deployment model.','beginner');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('27','Facebook','Facebook is a social media website.','beginner');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('28','Database Software','General relational database and software knowledge.','medium');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('29','CSS','Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a document written in a markup language.','beginner');
+Insert into KNOWLEDGE_SKILL (KS_CODE,KS_TITLE,KS_DESCRIPTION,KS_LEVEL) values ('30','VMWare','VMWare is a company that provides cloud computing and platform virtualization software and services.','beginner');
 
 -- SKILL_SET --
 Insert into SKILL_SET (KS_CODE,CATE_CODE) values ('1','1');
@@ -699,4 +701,4 @@ Insert into PREFERRED_SKILL (JOB_CODE,KS_CODE) values ('9','21');
 Insert into PREFERRED_SKILL (JOB_CODE,KS_CODE) values ('9','24');
 Insert into PREFERRED_SKILL (JOB_CODE,KS_CODE) values ('9','9');
 
--- HAPPY ALPACA --
+-- HAPPY PANDA --
