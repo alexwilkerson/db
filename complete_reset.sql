@@ -699,4 +699,4 @@ Insert into PREFERRED_SKILL (JOB_CODE,KS_CODE) values ('9','21');
 Insert into PREFERRED_SKILL (JOB_CODE,KS_CODE) values ('9','24');
 Insert into PREFERRED_SKILL (JOB_CODE,KS_CODE) values ('9','9');
 
--- HAPPY PANDA --
+-- HAPPY ALPACA --

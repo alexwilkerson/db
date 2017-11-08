@@ -10,30 +10,171 @@ where comp_id = '8' and pay_type = 'salary'
 order by pay_rate DESC;
 
 -- 3. List companies’ labor cost (total salaries and wage rates by 1920 hours) in descending order.
+---not working
+with company_total_sal(comp_id, total_sal) as
+(select comp_id, sum(pay_rate)
+from job
+where pay_type = 'salary'
+group by comp_id),
+
+company_total_wages(comp_id, total_wages) as
+(select comp_id, sum(pay_rate)*1920
+from job
+where pay_type = 'wages'
+group by comp_id)
+
+select comp_id, company_total_sal.total_sal + company_total_wages.total_wages labor_cost
+from company_total_sal natural join company_total_wages
+order by labor_cost desc;
+
+
 -- 4. Find all the jobs a person is currently holding and worked in the past.
-select title
+select cate_title
 from person natural join works natural join has_category natural join job_category
 where per_id = '1';
 
 -- 5. List a person’s knowledge/skills in a readable format.
+---select ks_code,ks_title,ks_description,ks_level ks code needed?
+select ks_title,ks_level, ks_description
+from has_skill natural join knowledge_skill
+where per_id = 1;
+
 -- 6. List the skill gap of a worker between his/her job(s) and his/her skills.
+(select ks_code, ks_title
+from required_skill natural join works natural join job natural join knowledge_skill
+where per_id = 1)
+minus
+(select ks_code, ks_title from has_skill natural join knowledge_skill where per_id = 1);
+
 -- 7. List the required knowledge/skills of a job/ a job category in a readable format. (two queries)
+-- a job
+select ks_code, ks_title, ks_level, ks_description
+from required_skill natural join knowledge_skill
+where job_code = 1;
+
+--need to implement job cate core skills
+
 -- 8. List a person’s missing knowledge/skills for a specific job in a readable format.
+
+(select ks_code, ks_title
+from required_skill natural join works natural join job natural join knowledge_skill
+where per_id = 1 and job_code = 2)
+minus
+(select ks_code, ks_title from has_skill natural join knowledge_skill where per_id = 1);
+
 -- 9. List the courses (course id and title) that each alone teaches all the missing knowledge/skills for a person to
 -- pursue a specific job.
+
+with missing_ks(ks) as
+((select ks_code 
+from required_skill natural join job
+where job_code = 1)
+minus
+(select ks_code
+from has_skill
+where per_id = 1))
+
+select c_code, c_title
+from course c
+where not exists
+((select *
+from missing_ks)
+minus
+(select ks_code
+from teaches_skill ts
+where ts.c_code = c.c_code));
+
+
 -- 10. Suppose the skill gap of a worker and the requirement of a desired job can be covered by one course. Find the
 -- “quickest” solution for this worker. Show the course, section information and the completion date.
+
+
+
 -- 11. Find the cheapest course to make up one’s skill gap by showing the course to take and the cost (of the section
 -- price).
+
+
 -- 12. If query #9 returns nothing, then find the course sets that their combination covers all the missing knowledge/
 -- skills for a person to pursue a specific job. The considered course sets will not include more than three courses. If multiple course sets are found, list the course sets (with their course IDs) in the order of the ascending order of the course sets’ total costs.
 -- 13. List all the job categories that a person is qualified for.
+
+select cate_code, cate_title
+from job_category jc
+where not exists
+((select ks_code
+from skill_set ss
+where jc.cate_code = ss.cate_code)
+minus
+(select ks_code
+from has_skill
+where per_id = 2));
+
 -- 14. Find the job with the highest pay rate for a person according to his/her skill qualification.
+---not working 
+with pay_rate_table  as
+(select distinct rs.cate_code
+from required_skill rs
+where not exists
+((select ks_code
+from required_skill rs2
+where rs.cate_code = rs2.cate_code)
+minus
+(select ks_code 
+from has_skill
+where per_id=1)))
+select job_code, pay_rate
+from job natural join pay_rate_table
+where pay_rate = (select max(pay_rate)
+from job natural join pay_rate_table);
 -- 15. List all the names along with the emails of the persons who are qualified for a job.
+
+select per_name, email
+from person p
+where not exists
+((select ks_code
+from required_skill
+where job_code = 1)
+minus
+(select ks_code
+from has_skill hs
+where hs.per_id = p.per_id));
 -- 16. When a company cannot find any qualified person for a job, a secondary solution is to find a person who is almost
 -- qualified to the job. Make a “missing-one” list that lists people who miss only one skill for a specified job.
+select per_id, per_name
+from person p
+where  1 = (select count(*)
+            from ((select ks_code
+                    from required_skill
+                    where job_code = 1)
+            minus
+            (select ks_code
+            from has_skill hs
+            where hs.per_id = p.per_id))
+);
+       
 -- 17. List the skillID and the number of people in the missing-one list for a given job code in the ascending order of the
 -- people counts.
+--- redo
+with missing_one(per_id) as 
+(select per_id, per_name
+from person p
+where  1 = (select count(*)
+            from ((select ks_code
+                    from required_skill
+                    where job_code = 1)
+            minus
+            (select ks_code
+            from has_skill hs
+            where hs.per_id = p.per_id)
+            )
+))
+select ks_code, count(*) as people_count
+from((select * from (select per_id from person)join required_skill) 
+minus
+((select * from has_skill) natural join missing_one))
+group by ks_code
+order by people_count
+
 -- 18. Suppose there is a new job that has nobody qualified. List the persons who miss the least number of skills and
 -- report the “least number”.
 -- 19. For a specified job category and a given small number k, make a “missing-k” list that lists the people’s IDs and
