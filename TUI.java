@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Set;
 
 class TUI {
     public static String choice;
@@ -10,7 +11,6 @@ class TUI {
     public static boolean exit = false;
     public static String query;
     public static boolean implemented = false;
-
     public static void main(String args[]){
         printWelcomeMsg();
         // TUI loop
@@ -24,7 +24,7 @@ class TUI {
                 }
                 if (isNumber(choice)) {
                     switch(Integer.parseInt(choice)) {
-                        case 1: 
+                        case 1:
                             implemented = true;
                             query = "select per_name\n" +
                                     "from person natural join works natural join job\n" +
@@ -45,6 +45,41 @@ class TUI {
                                     "group by comp_id\n" +
                                     "order by total_labor_cost desc";
                             break;
+                        case 4:
+                            implemented = true;
+                            query = "select cate_title, job_code, start_date, end_date\n" +
+                                    "from person natural join works natural join has_category\n" +
+                                    "natural join job_category\n" +
+                                    "where per_id = 1\n" +
+                                    "order by start_date asc";
+                            break;
+                        case 5:
+                            implemented = true;
+                            query = "select ks_title, ks_level, ks_description\n" +
+                                    "from has_skill natural join knowledge_skill\n" +
+                                    "where per_id = 1";
+                            break;
+                        case 6:
+                            implemented = true;
+                            query = "(select ks_code, ks_title\n" +
+                                    "from required_skill natural join works natural join job\n" +
+                                    "natural join knowledge_skill\n" +
+                                    "where per_id = 1)\n" +
+                                    "minus\n" +
+                                    "(select ks_code, ks_title \n" +
+                                    "from has_skill natural join knowledge_skill\n" +
+                                    "where per_id = 1)";
+                            break;
+                        case 8:
+                            implemented = true;
+                            query = "(select ks_code, ks_title\n" +
+                                    "from required_skill natural join job natural join knowledge_skill\n" +
+                                    "where job_code = 2)\n" +
+                                    "minus\n" +
+                                    "(select ks_code, ks_title \n" +
+                                    "from has_skill natural join knowledge_skill\n" +
+                                    "where per_id = 4)";
+                            break;
                         default:
                             System.out.println();
                             System.out.println("Not yet implemented.");
@@ -54,12 +89,13 @@ class TUI {
                     if (implemented) {
                         if (!runQuery(query))
                             System.out.println("An error occurred.");
-                    }
+                    } 
                 }
             } else {
                 System.out.println();
                 System.out.println("Invalid option. Try again.");
                 System.out.println();
+
             }
         }
     }
@@ -82,10 +118,10 @@ class TUI {
                 return false;
         }
         if (choice.equals("q") || choice.equals("Q")) {
-                return true;
-            }else{
-                return false;
-            }
+            return true;
+        }else{
+            return false;
+        } 
     }
 
     public static boolean isNumber(String input) {
@@ -106,21 +142,28 @@ class TUI {
         try{
             // step 1 load the driver class
             Class.forName("oracle.jdbc.driver.OracleDriver");
-
             // step 2 create the connection object
             Connection con=DriverManager.getConnection(
-                    "jdbc:oracle:thin:@dbsvcs.cs.uno.edu:1521:orcl", "awilkers", "zT7RXLfP");
-
+                "jdbc:oracle:thin:@dbsvcs.cs.uno.edu:1521:orcl", "awilkers", "zT7RXLfP");
             // step 3 create the statement object
             Statement stmt = con.createStatement();
-
             // step 4 execute query
             ResultSet rs = stmt.executeQuery(q);
-            List<HashMap<String,Object>> test = convertResultSetToList(rs);
-            System.out.println(test);
-            //while(rs.next())
-            //    System.out.println(rs.getString(1));
-
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int cols = rsmd.getColumnCount();
+            for (int i = 1; i <= cols; i++) {
+                System.out.print(String.format("%-30s", rsmd.getColumnName(i)));
+            }
+            System.out.println();
+            while (rs.next()) {
+                for (int i = 1; i <= cols; i++) {
+                    String colValue = rs.getString(i);
+                    System.out.print(String.format("%-30s", colValue));
+                }
+                System.out.println();
+    
+            }
+           
             // step 5 close the connection object
             con.close();
         } catch (Exception e) {
@@ -130,22 +173,6 @@ class TUI {
         }
         System.out.println();
         return true;
-    }
-    
-    public static List<HashMap<String,Object>> convertResultSetToList(ResultSet rs) throws SQLException {
-        ResultSetMetaData md = rs.getMetaData();
-        int columns = md.getColumnCount();
-        List<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-
-        while (rs.next()) {
-            HashMap<String,Object> row = new HashMap<String, Object>(columns);
-            for(int i=1; i<=columns; ++i) {
-                row.put(md.getColumnName(i),rs.getObject(i));
-            }
-            list.add(row);
-        }
-
-        return list;
     }
 
 }
