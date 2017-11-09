@@ -280,7 +280,7 @@ class TUI {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             // step 2 create the connection object
             Connection con=DriverManager.getConnection(
-                "jdbc:oracle:thin:@dbsvcs.cs.uno.edu:1521:orcl", "awilkers", "zT7RXLfP");
+                "jdbc:oracle:thin:@dbsvcs.cs.uno.edu:1521:orcl", secrets.user, secrets.password);
             // step 3 create the statement object
             Statement stmt = con.createStatement();
             // step 4 execute query
