@@ -1,16 +1,16 @@
-#Workforce Management and Career Planning System
+# Workforce Management and Career Planning System
 
 Information system that can help optimize training programs, job assistance
 services, career planning, and company recruitment. 
 
-##TODO
+## TODO
 
-###GUI
+### GUI
 
 - [ ] Create Login Screen
 - [ ] Work out GUI layout 
 
-###Test Queries
+### Test Queries
 
 Test these queries with small dummy data, and provide test cases
 
@@ -20,7 +20,7 @@ Test these queries with small dummy data, and provide test cases
 - [ ] 20 - 23
 - [ ] 24 - 26
 
-###JDBC
+### JDBC
 
 More important:
 
