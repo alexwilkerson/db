@@ -30,7 +30,7 @@ More important:
 
 Least Important:
 
-- [ ] Deleting a person to the Database
-- [ ] Editing/Information about A person 
-* [ ] Adding a person to a company 
+- [ ] Deleting a person from the Database
+- [ ] Editing/Information about a person 
+- [ ] Adding a person to a company 
 
