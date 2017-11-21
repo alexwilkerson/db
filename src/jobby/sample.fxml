@@ -11,7 +11,7 @@
   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
      <children>
         <Label text="URL" />
-        <TextField />
+        <TextField fx:id="urlField" />
      </children>
   </HBox>
   <Button mnemonicParsing="false" onAction="#countWords" text="Let's Get Counting!" />
