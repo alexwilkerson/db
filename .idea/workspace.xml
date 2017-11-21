@@ -4,9 +4,6 @@
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/4125/jobby/sample.fxml" afterPath="$PROJECT_DIR$/out/production/4125/jobby/sample.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jobby/Controller.java" afterPath="$PROJECT_DIR$/src/jobby/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jobby/Main.java" afterPath="$PROJECT_DIR$/src/jobby/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jobby/sample.fxml" afterPath="$PROJECT_DIR$/src/jobby/sample.fxml" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -322,7 +319,7 @@
       <workItem from="1511222113961" duration="3542000" />
       <workItem from="1511225686440" duration="2520000" />
       <workItem from="1511228224556" duration="740000" />
-      <workItem from="1511228986689" duration="271000" />
+      <workItem from="1511228986689" duration="305000" />
     </task>
     <task id="LOCAL-00001" summary="This commit is me doing a tutorial for a GUI in JavaFX.">
       <created>1511222865280</created>
@@ -338,11 +335,18 @@
       <option name="project" value="LOCAL" />
       <updated>1511224246122</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Super basic setup. Got the database connection working.com">
+      <created>1511229290664</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1511229290664</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9609000" />
+    <option name="totallyTimeSpent" value="9643000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="57" y="22" width="1351" height="876" extended-state="0" />
@@ -392,7 +396,8 @@
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <MESSAGE value="This commit is me doing a tutorial for a GUI in JavaFX." />
     <MESSAGE value="Added new stuff. Going to delete it now." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added new stuff. Going to delete it now." />
+    <MESSAGE value="Super basic setup. Got the database connection working.com" />
+    <option name="LAST_COMMIT_MESSAGE" value="Super basic setup. Got the database connection working.com" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
