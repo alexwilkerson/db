@@ -1,3 +1,4 @@
+import javafx.scene.input.KeyCode;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
@@ -16,8 +17,13 @@ public class AlertBox {
 
         Label label = new Label();
         label.setText(message);
-        Button closeButton = new Button("Close.");
+        label.setPadding(new Insets(10,10,10,10));
+        Button closeButton = new Button("Okay");
         closeButton.setOnAction(e -> window.close());
+        closeButton.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER)
+                window.close();
+        });
 
         VBox layout = new VBox(10);
         layout.getChildren().addAll(label, closeButton);

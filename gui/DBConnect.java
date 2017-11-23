@@ -6,10 +6,8 @@ public class DBConnect {
 
     private static Connection conn;
     private static String url = "jdbc:oracle:thin:@dbsvcs.cs.uno.edu:1521:orcl";
-    private static String user = "awilkers";
-    private static String pass = "zT7RXLfP";
 
-    public static Connection connect() throws SQLException {
+    public static Connection connect(String user, String pass) throws SQLException {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
         } catch (ClassNotFoundException cnfe) {
@@ -24,10 +22,10 @@ public class DBConnect {
         return conn;
     }
 
-    public static Connection getConnection() throws SQLException, ClassNotFoundException {
+    public static Connection getConnection(String user, String pass) throws SQLException, ClassNotFoundException {
         if (conn != null && !conn.isClosed())
             return conn;
-        connect();
+        connect(user, pass);
         return conn;
     }
 }

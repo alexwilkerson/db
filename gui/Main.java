@@ -8,10 +8,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -19,13 +24,14 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLSyntaxErrorException;
 
-public class DynamicTable extends Application {
+public class Main extends Application {
 
     // TABLE VIEW AND DATA
     private ObservableList<ObservableList> data;
     private TableView tableView;
     private TextArea sqlInput = new TextArea();
     private Label queryLabel = new Label();
+    private String user, pass;
 
     // MAIN EXECUTOR
     public static void main(String[] args) {
@@ -46,7 +52,7 @@ public class DynamicTable extends Application {
         Connection c;
         data = FXCollections.observableArrayList();
         try {
-            c = DBConnect.connect();
+            c = DBConnect.connect(user, pass);
             // SQL FOR SELECTING
             // String SQL = "SELECT * FROM person";
             // ResultSet
@@ -59,9 +65,9 @@ public class DynamicTable extends Application {
                 // we are using non property style for making dynamic table
                 final int j = i;
                 TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList<String>, String>, ObservableValue<String>>() {
                     @Override
-                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
+                    public ObservableValue<String> call(CellDataFeatures<ObservableList<String>, String> param) {
                         if (param.getValue().get(j) != null) {
                             return new SimpleStringProperty(param.getValue().get(j).toString());
                         } else {
@@ -103,12 +109,17 @@ public class DynamicTable extends Application {
             tableView.getItems().clear();
             tableView.getColumns().clear();
             e.printStackTrace();
+            AlertBox.display("Error Connecting", "Error Connecting to database. Please check internet connection.");
             System.out.println("Error on building data.");
         }
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        /*********************
+         * SQL Query scene   *
+         *********************/
         // TableView
         tableView = new TableView();
 
@@ -132,13 +143,8 @@ public class DynamicTable extends Application {
         querySelectionLine.getChildren().addAll(queriesComboBox, queryLabel);
 
         Button switchSQL = new Button("Run Query");
-        switchSQL.setOnAction(e -> {
-            queryLabel.setText("");
-            buildData(sqlInput.getText());
-        });
         topMenu.getChildren().addAll(querySelectionLine, sqlInput, switchSQL);
 
-        runQueryFromComboBox("Query 1");
         // buildData(sqlInput.getText());
 
         ScrollPane scrollPane = new ScrollPane(tableView);
@@ -151,10 +157,69 @@ public class DynamicTable extends Application {
         BorderPane.setMargin(topMenu, new Insets(12,12,0,12));
         BorderPane.setMargin(scrollPane, new Insets(12,12,12,12));
 
-        // Main Scene
         Scene scene = new Scene(borderPane, 1200, 600);
-        stage.setScene(scene);
+
+        /********************
+         * Login scene      *
+         ********************/
+
+        GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(25,25,25,25));
+
+        Text sceneTitle = new Text("Pending Matters");
+        sceneTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        gridPane.add(sceneTitle, 0, 0, 2, 1);
+
+        Label userNameLabel = new Label("User Name:");
+        gridPane.add(userNameLabel, 0, 1);
+
+        TextField userTextField = new TextField();
+        gridPane.add(userTextField, 1, 1);
+
+        Label pw = new Label("Password:");
+        gridPane.add(pw, 0, 2);
+
+        PasswordField pwBox = new PasswordField();
+        userTextField.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                pwBox.requestFocus();
+            }
+        });
+        pwBox.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                if (userTextField.getText().trim().equals("awilkers") && pwBox.getText().equals("zT7RXLfP")) {
+                    user = "awilkers";
+                    pass = "zT7RXLfP";
+                    switchSQL.setOnAction(event -> {
+                        queryLabel.setText("");
+                    });
+                    stage.setScene(scene);
+                    stage.show();
+                    runQueryFromComboBox("Query 1");
+                } else if (userTextField.getText().trim().equals("kbongcas") && pwBox.getText().equals("9TTtPT97")) {
+                    user = "kbongcas";
+                    pass = "9TTtPT97";
+                    switchSQL.setOnAction(event -> {
+                        queryLabel.setText("");
+                    });
+                    stage.setScene(scene);
+                    stage.show();
+                    runQueryFromComboBox("Query 1");
+                } else {
+                    AlertBox.display("Wrong Credentials", "Username or Password incorrect.");
+                    pwBox.setText("");
+                }
+            }
+        });
+        gridPane.add(pwBox, 1, 2);
+
+        stage.setTitle("Pending Matters Job Corp");
+        stage.setScene(new Scene(gridPane, 1200, 600));
         stage.show();
+
     }
 
     private void runQueryFromComboBox(String query) {
