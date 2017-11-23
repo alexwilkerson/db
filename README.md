@@ -7,7 +7,7 @@ services, career planning, and company recruitment.
 
 ### GUI
 
-- [ ] Create Login Screen
+- [x] Create Login Screen
 - [ ] Work out GUI layout 
 
 ### Test Queries
