@@ -7,15 +7,11 @@ public class DBConnect {
     private static Connection conn;
     private static String url = "jdbc:oracle:thin:@dbsvcs.cs.uno.edu:1521:orcl";
 
-    public static Connection connect(String user, String pass) throws SQLException {
+    static Connection connect(String user, String pass) throws SQLException {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
-        } catch (ClassNotFoundException cnfe) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException cnfe) {
             System.err.println("Error: " + cnfe.getMessage());
-        } catch (InstantiationException ie) {
-            System.err.println("Error: " + ie.getMessage());
-        } catch (IllegalAccessException iae) {
-            System.err.println("Error: " + iae.getMessage());
         }
 
         conn = DriverManager.getConnection(url, user, pass);

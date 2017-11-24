@@ -27,8 +27,8 @@ import java.sql.SQLSyntaxErrorException;
 public class Main extends Application {
 
     // TABLE VIEW AND DATA
-    private ObservableList<ObservableList> data;
-    private TableView tableView;
+    private ObservableList<ObservableList<String>> data;
+    private TableView<ObservableList<String>> tableView;
     private TextArea sqlInput = new TextArea();
     private Label queryLabel = new Label();
     private String user, pass;
@@ -39,7 +39,7 @@ public class Main extends Application {
     }
 
     // CONNECTION DATABASE
-    public void buildData(String SQL) {
+    private void buildData(String SQL) {
         SQL = SQL.trim();
         if (SQL.length() > 0) {
             if (SQL.charAt(SQL.length() - 1) == ';') {
@@ -58,21 +58,16 @@ public class Main extends Application {
             // ResultSet
             ResultSet rs = c.createStatement().executeQuery(SQL);
 
-            /**********************************
-             * Table column added dynamically *
-             **********************************/
+            // Table column added dynamically
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
                 // we are using non property style for making dynamic table
                 final int j = i;
                 TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList<String>, String>, ObservableValue<String>>() {
-                    @Override
-                    public ObservableValue<String> call(CellDataFeatures<ObservableList<String>, String> param) {
-                        if (param.getValue().get(j) != null) {
-                            return new SimpleStringProperty(param.getValue().get(j).toString());
-                        } else {
-                            return new SimpleStringProperty();
-                        }
+                col.setCellValueFactory((Callback<CellDataFeatures<ObservableList<String>, String>, ObservableValue<String>>) param -> {
+                    if (param.getValue().get(j) != null) {
+                        return new SimpleStringProperty(param.getValue().get(j));
+                    } else {
+                        return new SimpleStringProperty();
                     }
                 });
 
@@ -80,9 +75,7 @@ public class Main extends Application {
                 System.out.println("Column [" + i + "] ");
             }
 
-            /********************************
-             * Data added to ObservableList *
-             ********************************/
+            // Data added to ObservableList
             while (rs.next()) {
                 // Iterate row
                 ObservableList<String> row = FXCollections.observableArrayList();
@@ -117,27 +110,23 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        /*********************
-         * SQL Query scene   *
-         *********************/
+        // SQL Query scene
         // TableView
-        tableView = new TableView();
+        tableView = new TableView<>();
 
         // buildData("SELECT * FROM person");
 
         VBox topMenu = new VBox(10);
 
         HBox querySelectionLine = new HBox(10);
-        ComboBox queriesComboBox = new ComboBox();
+        ComboBox<String> queriesComboBox = new ComboBox<>();
         queriesComboBox.getItems().addAll(
                 "Query 1",
                 "Query 2",
                 "Query 3"
         );
         queriesComboBox.setValue("Query 1");
-        queriesComboBox.setOnAction(e -> {
-            runQueryFromComboBox(queriesComboBox.getValue().toString());
-        });
+        queriesComboBox.setOnAction(e -> runQueryFromComboBox(queriesComboBox.getValue()));
 
         querySelectionLine.setAlignment(Pos.CENTER_LEFT);
         querySelectionLine.getChildren().addAll(queriesComboBox, queryLabel);
@@ -159,9 +148,8 @@ public class Main extends Application {
 
         Scene scene = new Scene(borderPane, 1200, 600);
 
-        /********************
-         * Login scene      *
-         ********************/
+
+        // Login scene
 
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
@@ -193,18 +181,14 @@ public class Main extends Application {
                 if (userTextField.getText().trim().equals("awilkers") && pwBox.getText().equals("zT7RXLfP")) {
                     user = "awilkers";
                     pass = "zT7RXLfP";
-                    switchSQL.setOnAction(event -> {
-                        queryLabel.setText("");
-                    });
+                    switchSQL.setOnAction(event -> queryLabel.setText(""));
                     stage.setScene(scene);
                     stage.show();
                     runQueryFromComboBox("Query 1");
                 } else if (userTextField.getText().trim().equals("kbongcas") && pwBox.getText().equals("9TTtPT97")) {
                     user = "kbongcas";
                     pass = "9TTtPT97";
-                    switchSQL.setOnAction(event -> {
-                        queryLabel.setText("");
-                    });
+                    switchSQL.setOnAction(event -> queryLabel.setText(""));
                     stage.setScene(scene);
                     stage.show();
                     runQueryFromComboBox("Query 1");
