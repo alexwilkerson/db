@@ -26,24 +26,24 @@ public enum Queries {
     Q4( "Query 4",
             "Given a persons identifier, find all the jobs this person is\n" + "" +
                     "currently holding and worked in the past.",
-            "SELECT per_id, job_code, start_date, end_date\n" +
+            "SELECT job_code, start_date, end_date\n" +
                     "FROM works NATURAL JOIN job\n" +
                     "WHERE per_id = 1\n" +
                     "ORDER BY start_date DESC;"),
 
     Q5( "Query 5",
             "List a person’s knowledge/skills in a readable format.",
-            "SELECT ks_title,ks_level, ks_description\n" +
+            "SELECT ks_title, ks_level, ks_description\n" +
                     "FROM has_skill NATURAL JOIN knowledge_skill\n" +
                     "WHERE per_id = 1;"),
     Q6("Query 6",
             "List the skill gap of a worker between his/her job(s) AND his/her skills.",
-            "(SELECT ks_code, ks_title\n" +
+            "(SELECT ks_code\n" +
                     "from required_skill NATURAL JOIN works \n" +
                     "WHERE per_id = 1)\n" +
                     "MINUS\n" +
-                    "(SELECT ks_code, ks_title \n" +
-                    "FROM hAS_skill NATURAL JOIN knowledge_skill \n" +
+                    "(SELECT ks_code\n" +
+                    "FROM has_skill NATURAL JOIN knowledge_skill \n" +
                     "WHERE per_id = 1);"),
     Q7a("Query 7a",
             "List the required knowledge skill a job in a readable format.",
@@ -73,7 +73,7 @@ public enum Queries {
                     "    WHERE job_code = 1)\n" +
                     "    MINUS\n" +
                     "    (SELECT ks_code\n" +
-                    "    FROM hAS_skill\n" +
+                    "    FROM has_skill\n" +
                     "    WHERE per_id = 1))\n" +
                     "SELECT c_code, c_title\n" +
                     "FROM course c\n" +
@@ -95,10 +95,10 @@ public enum Queries {
                     "    WHERE job_code = 1)\n" +
                     "    MINUS\n" +
                     "    (SELECT ks_code\n" +
-                    "    FROM hAS_skill\n" +
+                    "    FROM has_skill\n" +
                     "    WHERE per_id = 1)),\n" +
                     "\n" +
-                    "fufilling_courses(c_code) AS (\n" +
+                    "fulfilling_courses(c_code) AS (\n" +
                     "    SELECT c_code\n" +
                     "    FROM course c\n" +
                     "    WHERE NOT EXISTS (\n" +
@@ -109,15 +109,16 @@ public enum Queries {
                     "        FROM teaches_skill ts\n" +
                     "        WHERE ts.c_code = c.c_code))),\n" +
                     "\n" +
-                    "fufilling_section(c_code, complete_date) AS (\n" +
-                    "    SELECT c_code, complete_date \n" +
-                    "    FROM section NATURAL JOIN fufilling_courses \n" +
+                    "fulfilling_section(c_code, complete_date) AS (\n" +
+                    "    SELECT DISTINCT c_code, complete_date \n" +
+                    "    FROM section NATURAL JOIN fulfilling_courses\n" +
+                    "    WHERE complete_date >= TRUNC(sysdate)\n" +
                     "    )\n" +
                     "\n" +
                     "SELECT c_code, complete_date\n" +
-                    "FROM fufilling_section\n" +
+                    "FROM fulfilling_section\n" +
                     "WHERE complete_date = (SELECT MIN(complete_date)\n" +
-                    "                        FROM fufilling_section);"),
+                    "                        FROM fulfilling_section);"),
     Q11("Query 11",
             "Find the cheapest course to make up one’s skill gap by showing the\n" +
                 "course to take AND the cost (of the section price).",
@@ -128,10 +129,10 @@ public enum Queries {
             "    WHERE job_code = 1)\n" +
             "    MINUS\n" +
             "    (SELECT ks_code\n" +
-            "    FROM hAS_skill\n" +
+            "    FROM has_skill\n" +
             "    WHERE per_id = 1)),\n" +
             "\n" +
-            "fufilling_courses(c_code, c_title, retail_price) AS (\n" +
+            "fulfilling_courses(c_code, c_title, retail_price) AS (\n" +
             "    SELECT c_code, c_title, retail_price\n" +
             "    FROM course c\n" +
             "    WHERE NOT EXISTS (\n" +
@@ -142,36 +143,36 @@ public enum Queries {
             "        FROM teaches_skill ts\n" +
             "        WHERE ts.c_code = c.c_code)))\n" +
             "\n" +
-            "SELECT c_code, c_title, price\n" +
-            "FROM fufilling_courses\n" +
-            "WHERE price = (SELECT MIN(price) \n" +
-            "                FROM fufilling_courses NATURAL JOIN section);"),
-    Q12("Query 12",
-            "If query #9 returns nothing, then find the course sets that their\n" +
-                    "combination covers all the missing knowledge/ skills for a person to pursue\n" +
-                    "a specific job. The considered course sets will not include more than three\n" +
-                    "courses. If multiple course sets are found, list the course sets (WITH their\n" +
-                    "course IDs) in the order of the AScending order of the course sets’ total\n" +
-                    "costs.",
-            "WITH\n" +
-                    "missing_ks(ks) AS (\n" +
-                    "    (SELECT ks_code \n" +
-                    "    FROM required_skill\n" +
-                    "    WHERE job_code = 1)\n" +
-                    "    MINUS\n" +
-                    "    (SELECT ks_code\n" +
-                    "    FROM hAS_skill\n" +
-                    "    WHERE per_id = 1)),\n" +
-                    "\n" +
-                    "SELECT DISTINCT c_code, title\n" +
-                    "FROM course join section using (c_code) NATURAL JOIN teaches\n" +
-                    "WHERE ks_code IN ((SELECT ks_code\n" +
-                    "                   FROM job_category NATURAL JOIN required_skill\n" +
-                    "                   WHERE cate_code = '1')\n" +
-                    "                   MINUS\n" +
-                    "                  (SELECT ks_code\n" +
-                    "                   FROM person NATURAL JOIN hAS_skill\n" +
-                    "                   WHERE per_id = 1));"),
+            "SELECT c_code, c_title, retail_price\n" +
+            "FROM fulfilling_courses\n" +
+            "WHERE retail_price = (SELECT MIN(retail_price) \n" +
+            "                FROM fulfilling_courses NATURAL JOIN section);"),
+    //Q12("Query 12",
+    //        "If query #9 returns nothing, then find the course sets that their\n" +
+    //                "combination covers all the missing knowledge/ skills for a person to pursue\n" +
+    //                "a specific job. The considered course sets will not include more than three\n" +
+    //                "courses. If multiple course sets are found, list the course sets (WITH their\n" +
+    //                "course IDs) in the order of the ascending order of the course sets’ total\n" +
+    //                "costs.",
+    //        "WITH\n" +
+    //                "missing_ks(ks) AS (\n" +
+    //                "    (SELECT ks_code \n" +
+    //                "    FROM required_skill\n" +
+    //                "    WHERE job_code = 1)\n" +
+    //                "    MINUS\n" +
+    //                "    (SELECT ks_code\n" +
+    //                "    FROM has_skill\n" +
+    //                "    WHERE per_id = 1)),\n" +
+    //                "\n" +
+    //                "SELECT DISTINCT c_code, title\n" +
+    //                "FROM course join section using (c_code) NATURAL JOIN teaches\n" +
+    //                "WHERE ks_code IN ((SELECT ks_code\n" +
+    //                "                   FROM job_category NATURAL JOIN required_skill\n" +
+    //                "                   WHERE cate_code = '1')\n" +
+    //                "                   MINUS\n" +
+    //                "                  (SELECT ks_code\n" +
+    //                "                   FROM person NATURAL JOIN has_skill\n" +
+    //                "                   WHERE per_id = 1));"),
     Q13("Query 13",
             "List all the job categories that a person is qualified for.",
             "SELECT cate_code, cate_title\n" +
@@ -182,10 +183,10 @@ public enum Queries {
                     "    WHERE jc.cate_code = ss.cate_code)\n" +
                     "    MINUS\n" +
                     "    (SELECT ks_code\n" +
-                    "    FROM hAS_skill\n" +
+                    "    FROM has_skill\n" +
                     "    WHERE per_id = 2));"),
     Q14("Query 14",
-            "Find the job WITH the highest pay rate for a person according to his/her skill qualification.",
+            "Find the job with the highest pay rate for a person according to his/her skill qualification.",
             "WITH \n" +
                     "qualified_jobs AS(\n" +
                     "    SELECT j.job_code\n" +
@@ -210,7 +211,7 @@ public enum Queries {
                     "                                ELSE pay_rate*1920 END)\n" +
                     "                    FROM q_jobs_desc);"),
     Q15("Query 15",
-            "List all the names along WITH the emails of the persons who are qualified for a job.",
+            "List all the names along with the emails of the persons who are qualified for a job.",
             "SELECT per_name, email\n" +
                     "FROM person p\n" +
                     "WHERE NOT EXISTS (\n" +
@@ -235,41 +236,42 @@ public enum Queries {
                     "                  MINUS\n" +
                     "                 (SELECT ks_code\n" +
                     "                  FROM has_Skill hs \n" +
-                    "                  WHERE hs.per_id = p.per_id));\n"),
-    Q17("Query 17",
-            "List the skillID AND the number of people in the missing-one list for a\n" +
-                    "given job code in the AScending order of the people COUNTs.",
-    "SELECT per_id, per_name, \n"+
-            "FROM person p\n"+
-            "WHERE 1 = (SELECT COUNT(ks_code)\n"+
-            "            FROM ((SELECT ks_code\n"+
-            "                  FROM required_skill\n"+
-            "                   WHERE job_code =1)\n"+
-            "                  MINUS\n"+
-            "                 (SELECT ks_code\n"+
-            "                  FROM has_Skill hs \n"),
-    Q18("Query 18",
-            "Suppose there is a new job that hAS nobody qualified. List the persons\n" +
-                    "who miss the least number of skills AND report the “least number”.",
-            "WITH ()\n" +
-                    "missing_skills (per_id, num_missing) AS (\n" +
-                    "    SELECT per_id, COUNT(ks_code)\n" +
-                    "    FROM person p JOIN required_skills rs\n" +
-                    "    WHERE p.required_skills IN (\n" +
-                    "            SELECT *\n" +
-                    "            FROM required_skills\n" +
-                    "           MINUS\n" +
-                    "            SELECT skill_code\n" +
-                    "            FROM person_skill\n" +
-                    "            WHERE person_code = P.person_code )\n" +
-                    "    GROUP BY person_code ),\n" +
-                    "min_num_missing (min_missing) as (\n" +
-                    "    SELECT min(num_missing)\n" +
-                    "    FROM missing_skills )\n" +
-                    "  \n" +
-                    "SELECT person_code, num_missing\n" +
-                    "FROM missing_skills, min_num_missing\n" +
-                    "WHERE num_missing = min_num_missing.min_missing"),
+                    "                  WHERE hs.per_id = p.per_id)));\n"),
+    //Q17("Query 17",
+    //        "List the skillID AND the number of people in the missing-one list for a\n" +
+    //                "given job code in the ascending order of the people counts.",
+    //"SELECT per_id, per_name, \n"+
+    //        "FROM person p\n"+
+    //        "WHERE 1 = (SELECT COUNT(ks_code)\n"+
+    //        "            FROM ((SELECT ks_code\n"+
+    //        "                  FROM required_skill\n"+
+    //        "                   WHERE job_code =1)\n"+
+    //        "                  MINUS\n"+
+    //        "                 (SELECT ks_code\n"+
+    //        "                  FROM has_skill hs \n"+
+    //        "                  where hs.per_id = p.per_id)));"),
+    //Q18("Query 18",
+    //        "Suppose there is a new job that hAS nobody qualified. List the persons\n" +
+    //                "who miss the least number of skills AND report the “least number”.",
+    //        "WITH ()\n" +
+    //                "missing_skills (per_id, num_missing) AS (\n" +
+    //                "    SELECT per_id, COUNT(ks_code)\n" +
+    //                "    FROM person p JOIN required_skills rs\n" +
+    //                "    WHERE p.required_skills IN (\n" +
+    //                "            SELECT *\n" +
+    //                "            FROM required_skills\n" +
+    //                "           MINUS\n" +
+    //                "            SELECT skill_code\n" +
+    //                "            FROM person_skill\n" +
+    //                "            WHERE person_code = P.person_code )\n" +
+    //                "    GROUP BY person_code ),\n" +
+    //                "min_num_missing (min_missing) as (\n" +
+    //                "    SELECT min(num_missing)\n" +
+    //                "    FROM missing_skills )\n" +
+    //                "  \n" +
+    //                "SELECT person_code, num_missing\n" +
+    //                "FROM missing_skills, min_num_missing\n" +
+    //                "WHERE num_missing = min_num_missing.min_missing"),
     Q21("Query 21",
             "In a local or national crisis, we need to find all the people who once\n" +
                     "held a job of the special job category identifier.",
