@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -30,12 +31,35 @@ class AddPersonScreen {
 
         Text sceneTitle = new Text("Add Person");
         sceneTitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
-        gridPane.add(sceneTitle, 0, 0, 1, 1);
+        gridPane.add(sceneTitle, 0, 0, 2, 1);
 
 
         Text chooseCompanyText = new Text("Choose company:");
         gridPane.add(chooseCompanyText, 0,1,1,1);
         ComboBox<String> companyComboBox = new ComboBox<>();
+        gridPane.add(companyComboBox, 1, 1, 1, 1);
+
+        Text nameText = new Text("Name:");
+        gridPane.add(nameText, 0, 2,1,1);
+
+        TextField nameField = new TextField();
+        gridPane.add(nameField, 1,2,1,1);
+
+        Scene scene = new Scene(gridPane, 640, 600);
+        primaryStage.setScene(scene);
+        // return to select screen on close
+        primaryStage.setOnCloseRequest(e -> {
+            e.consume();
+            new SelectScreen(user, pass, primaryStage);
+        });
+        primaryStage.show();
+
+        // CENTER ON SCREEN
+        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
+
+        // POPULATE DATA
         Connection c;
         String SQL = "SELECT comp_name FROM company";
         try {
@@ -52,20 +76,5 @@ class AddPersonScreen {
             AlertBox.display("Error Connecting", "Error Connecting to database. Please check internet connection.");
             new SelectScreen(user, pass, primaryStage);
         }
-        gridPane.add(companyComboBox, 1, 1, 1, 1);
-
-        Scene scene = new Scene(gridPane, 640, 600);
-        primaryStage.setScene(scene);
-        // return to select screen on close
-        primaryStage.setOnCloseRequest(e -> {
-            e.consume();
-            new SelectScreen(user, pass, primaryStage);
-        });
-        primaryStage.show();
-
-        // CENTER ON SCREEN
-        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
     }
 }
