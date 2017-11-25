@@ -65,6 +65,11 @@ class QueriesScreen {
 
         Scene scene = new Scene(borderPane, 1200, 600);
         primaryStage.setScene(scene);
+        // return to select screen on close
+        primaryStage.setOnCloseRequest(e -> {
+            e.consume();
+            new SelectScreen(user, pass, primaryStage);
+        });
         primaryStage.show();
 
         // CENTER ON SCREEN

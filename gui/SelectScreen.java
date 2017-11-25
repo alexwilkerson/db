@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -42,6 +43,8 @@ class SelectScreen {
         buttons.getChildren().addAll(sqlButton, addPersonButton, findJobButton, findEmployeeButton);
         Scene buttonScene = new Scene(buttons, 300, 350);
         primaryStage.setScene(buttonScene);
+        // This is needed to return exiting to normal.
+        primaryStage.setOnCloseRequest(e -> Platform.exit());
         primaryStage.show();
 
         // CENTER ON SCREEN
