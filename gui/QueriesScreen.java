@@ -34,20 +34,21 @@ class QueriesScreen {
         VBox topMenu = new VBox(10);
 
         HBox querySelectionLine = new HBox(10);
-        ComboBox<String> queriesComboBox = new ComboBox<>();
-        queriesComboBox.getItems().addAll(
-                "Query 1",
-                "Query 2",
-                "Query 3"
-        );
-        queriesComboBox.setValue("Query 1");
+        ComboBox<Queries> queriesComboBox = new ComboBox<>();
+//        queriesComboBox.getItems().addAll(
+//                "Query 1",
+//                "Query 2",
+//                "Query 3"
+//        );
+        queriesComboBox.getItems().setAll(Queries.values());
+        queriesComboBox.setValue(Queries.Q1);
         queriesComboBox.setOnAction(e -> runQueryFromComboBox(queriesComboBox.getValue()));
 
         querySelectionLine.setAlignment(Pos.CENTER_LEFT);
         querySelectionLine.getChildren().addAll(queriesComboBox, queryLabel);
 
         Button switchSQL = new Button("Run Query");
-        switchSQL.setOnAction(e -> runQueryFromComboBox(sqlInput.getText()));
+        switchSQL.setOnAction(e -> runQueryFromComboBox(queriesComboBox.getValue()));
         topMenu.getChildren().addAll(querySelectionLine, sqlInput, switchSQL);
 
         // buildData(sqlInput.getText());
@@ -62,7 +63,7 @@ class QueriesScreen {
         BorderPane.setMargin(topMenu, new Insets(12,12,0,12));
         BorderPane.setMargin(scrollPane, new Insets(12,12,12,12));
 
-        runQueryFromComboBox("Query 1");
+        runQueryFromComboBox(queriesComboBox.getValue());
 
         Scene scene = new Scene(borderPane, 1200, 600);
         primaryStage.setScene(scene);
@@ -149,33 +150,9 @@ class QueriesScreen {
         }
     }
 
-    private void runQueryFromComboBox(String query) {
-        switch (query) {
-            case "Query 1":
-                queryLabel.setText("List a company's workers by names.");
-                sqlInput.setText("select per_name\n" +
-                        "from person natural join works natural join job\n" +
-                        "where comp_id = '8' and end_date is null;");
-                break;
-            case "Query 2":
-                queryLabel.setText("List a company's staff by salary in descending order.");
-                sqlInput.setText("select per_name, pay_rate\n" +
-                        "from person natural join works natural join job\n" +
-                        "where comp_id = '8' and pay_type = 'salary'\n" +
-                        "order by pay_rate desc;");
-                break;
-            case "Query 3":
-                queryLabel.setText("List company's labor cost (total salaries and wage rates by 1920 hours) in descending order.");
-                sqlInput.setText("select comp_id, sum(case when pay_type = 'salary'\n" +
-                        "    then pay_rate  else pay_rate*1920 end) as total_labor_cost\n" +
-                        "\n" +
-                        "from job natural join works\n" +
-                        "group by comp_id\n" +
-                        "order by total_labor_cost desc;");
-                break;
-            default:
-                break;
-        }
+    private void runQueryFromComboBox(Queries query) {
+        queryLabel.setText(query.getDesc());
+        sqlInput.setText(query.getSql());
         buildData(sqlInput.getText());
     }
 }
