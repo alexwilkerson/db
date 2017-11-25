@@ -47,6 +47,7 @@ class QueriesScreen {
         querySelectionLine.getChildren().addAll(queriesComboBox, queryLabel);
 
         Button switchSQL = new Button("Run Query");
+        switchSQL.setOnAction(e -> runQueryFromComboBox(sqlInput.getText()));
         topMenu.getChildren().addAll(querySelectionLine, sqlInput, switchSQL);
 
         // buildData(sqlInput.getText());
