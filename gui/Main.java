@@ -8,7 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.input.KeyCode;
+import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -203,6 +203,28 @@ public class Main extends Application {
 
         stage.setTitle("Pending Matters Job Corp");
         Scene loginScene = new Scene(gridPane, 1200, 600);
+
+        final KeyCodeCombination keyCombinationAlex = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
+        final KeyCodeCombination keyCombinationKevin = new KeyCodeCombination(KeyCode.K, KeyCombination.CONTROL_ANY);
+        loginScene.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (keyCombinationAlex.match(e)) {
+                user = "awilkers";
+                pass = "zT7RXLfP";
+                switchSQL.setOnAction(event -> queryLabel.setText(""));
+                stage.setScene(scene);
+                stage.show();
+                runQueryFromComboBox("Query 1");
+            }
+            if (keyCombinationKevin.match(e)) {
+                user = "kbongcas";
+                pass = "9TTtPT97";
+                switchSQL.setOnAction(event -> queryLabel.setText(""));
+                stage.setScene(scene);
+                stage.show();
+                runQueryFromComboBox("Query 1");
+            }
+        });
+
         stage.setScene(loginScene);
         stage.show();
 
