@@ -202,7 +202,7 @@ public class Main extends Application {
         gridPane.add(pwBox, 1, 2);
 
         stage.setTitle("Pending Matters Job Corp");
-        Scene loginScene = new Scene(gridPane, 1200, 600);
+        Scene loginScene = new Scene(gridPane, 640, 480);
 
         final KeyCodeCombination keyCombinationAlex = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
         final KeyCodeCombination keyCombinationKevin = new KeyCodeCombination(KeyCode.K, KeyCombination.CONTROL_ANY);
@@ -210,10 +210,9 @@ public class Main extends Application {
             if (keyCombinationAlex.match(e)) {
                 user = "awilkers";
                 pass = "zT7RXLfP";
-                switchSQL.setOnAction(event -> queryLabel.setText(""));
-                stage.setScene(scene);
-                stage.show();
-                runQueryFromComboBox("Query 1");
+                // switchSQL.setOnAction(event -> queryLabel.setText(""));
+                SelectScreen selectScreen = new SelectScreen(stage);
+                // runQueryFromComboBox("Query 1");
             }
             if (keyCombinationKevin.match(e)) {
                 user = "kbongcas";
