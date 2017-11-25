@@ -198,10 +198,12 @@ public class Main extends Application {
                 }
             }
         });
+
         gridPane.add(pwBox, 1, 2);
 
         stage.setTitle("Pending Matters Job Corp");
-        stage.setScene(new Scene(gridPane, 1200, 600));
+        Scene loginScene = new Scene(gridPane, 1200, 600);
+        stage.setScene(loginScene);
         stage.show();
 
     }
