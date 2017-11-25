@@ -4,12 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -17,15 +19,15 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLSyntaxErrorException;
 
-public class QueriesScreen {
+class QueriesScreen {
     // TABLE VIEW AND DATA
     private ObservableList<ObservableList<String>> data;
-    private TableView<ObservableList<String>> tableView = new TableView<ObservableList<String>>();
+    private TableView<ObservableList<String>> tableView = new TableView<>();
     private TextArea sqlInput = new TextArea();
     private Label queryLabel = new Label();
     private String user, pass;
 
-    public QueriesScreen(String user, String pass, Stage primaryStage) {
+    QueriesScreen(String user, String pass, Stage primaryStage) {
         this.user = user;
         this.pass = pass;
 
@@ -64,6 +66,11 @@ public class QueriesScreen {
         Scene scene = new Scene(borderPane, 1200, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        // CENTER ON SCREEN
+        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 
     }
 
