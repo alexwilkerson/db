@@ -5,14 +5,20 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class SelectScreen {
+    String user, pass;
 
-    public SelectScreen(Stage primaryStage) {
+    public SelectScreen(String user, String pass, Stage primaryStage) {
+        this.user = user;
+        this.pass = pass;
         VBox buttons = new VBox(10);
         buttons.setAlignment(Pos.CENTER);
         buttons.setPrefWidth(280);
         Button sqlButton = new Button("SQL Queries");
         sqlButton.setMinWidth(buttons.getPrefWidth());
         sqlButton.setMinHeight(75);
+        sqlButton.setOnAction(e -> {
+            new QueriesScreen(user, pass, primaryStage);
+        });
         Button addPersonButton = new Button("Add Person");
         addPersonButton.setMinWidth(buttons.getPrefWidth());
         addPersonButton.setMinHeight(75);
