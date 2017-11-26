@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 class FindEmployeeScreen {
     private Stage primaryStage;
