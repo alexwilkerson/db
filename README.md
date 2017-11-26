@@ -3,7 +3,7 @@
 Information system that can help optimize training programs, job assistance
 services, career planning, and company recruitment. 
 
-##Development Tasks
+## Development Tasks
 
 1. [x] Make an E-R diagram showing your data model. In the diagram, show the
    important attributes of each entity. For every relationship, show the
@@ -75,7 +75,7 @@ services, career planning, and company recruitment.
     * [x] Screen that finds company's given skills 
     * [ ] Screen that finds persons given skills 
 
-##Presentation
+## Presentation
 
 Every group must sign up for an hour-long project inspection with me in the
 week of November 27. At least two test cases should be prepared and documented
