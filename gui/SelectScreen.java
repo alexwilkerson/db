@@ -41,6 +41,7 @@ class SelectScreen {
         findEmployeeButton.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
         findEmployeeButton.setMinWidth(buttons.getPrefWidth());
         findEmployeeButton.setMinHeight(75);
+        findEmployeeButton.setOnAction(e -> new FindEmployeeScreen(user, pass, primaryStage));
 
         buttons.getChildren().addAll(sqlButton, addPersonButton, findJobButton, findEmployeeButton);
         Scene buttonScene = new Scene(buttons, 300, 350);
