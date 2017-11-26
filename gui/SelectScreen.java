@@ -25,11 +25,11 @@ class SelectScreen {
         sqlButton.setMinHeight(75);
         sqlButton.setOnAction(e -> new QueriesScreen(user, pass, primaryStage));
 
-        Button addPersonButton = new Button("Add Person");
+        Button addPersonButton = new Button("Add Employee");
         addPersonButton.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
         addPersonButton.setMinWidth(buttons.getPrefWidth());
         addPersonButton.setMinHeight(75);
-        addPersonButton.setOnAction(e -> new AddPersonScreen(user, pass, primaryStage));
+        addPersonButton.setOnAction(e -> new AddEmployeeScreen(user, pass, primaryStage));
 
         Button findJobButton = new Button("Find Job");
         findJobButton.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
@@ -41,6 +41,7 @@ class SelectScreen {
         findEmployeeButton.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
         findEmployeeButton.setMinWidth(buttons.getPrefWidth());
         findEmployeeButton.setMinHeight(75);
+        findEmployeeButton.setOnAction(e -> new FindEmployeeScreen(user, pass, primaryStage));
 
         buttons.getChildren().addAll(sqlButton, addPersonButton, findJobButton, findEmployeeButton);
         Scene buttonScene = new Scene(buttons, 300, 350);

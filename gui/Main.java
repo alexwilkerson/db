@@ -15,7 +15,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.FileInputStream;
+import java.net.URL;
 
 public class Main extends Application {
 
@@ -94,6 +96,14 @@ public class Main extends Application {
         });
 
         stage.setScene(loginScene);
+        try {
+            URL iconURL = Main.class.getResource("./icon.png");
+            java.awt.Image image = new ImageIcon(iconURL).getImage();
+            com.apple.eawt.Application.getApplication().setDockIconImage(image);
+        } catch (Exception e) {
+            // Won't work on Windows or Linux.
+        }
+        stage.getIcons().add(new Image("./icon.png"));
         stage.show();
 
         // CENTER ON SCREEN

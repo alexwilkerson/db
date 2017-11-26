@@ -107,6 +107,7 @@ class FindJobScreen {
     }
 
     private void searchJobs() {
+        jobList.getItems().clear();
         String SQL = "WITH \n" +
                 "\n" +
                 "selected_skills(ks_code) AS(\n" +
