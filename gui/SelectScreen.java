@@ -25,7 +25,7 @@ class SelectScreen {
         sqlButton.setMinHeight(75);
         sqlButton.setOnAction(e -> new QueriesScreen(user, pass, primaryStage));
 
-        Button addPersonButton = new Button("Add Person");
+        Button addPersonButton = new Button("Add Employee");
         addPersonButton.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
         addPersonButton.setMinWidth(buttons.getPrefWidth());
         addPersonButton.setMinHeight(75);
