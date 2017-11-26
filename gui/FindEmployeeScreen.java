@@ -38,27 +38,29 @@ class FindEmployeeScreen {
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 10, 10, 10));
 
-        HBox topMenu = new HBox(10);
+        HBox bottomMenu = new HBox(10);
         Label chooseJobCodeLabel = new Label("Select a job code to find suitable candidates:");
         jobCodeComboBox.setOnAction(e -> {
             refreshSkillsRequiredList();
             findEmployees();
         });
-        topMenu.getChildren().addAll(chooseJobCodeLabel, jobCodeComboBox);
-        topMenu.setAlignment(Pos.CENTER);
-        borderPane.setTop(topMenu);
+        bottomMenu.getChildren().addAll(chooseJobCodeLabel, jobCodeComboBox);
+        bottomMenu.setAlignment(Pos.CENTER);
+        borderPane.setBottom(bottomMenu);
+        BorderPane.setMargin(bottomMenu, new Insets(10, 0 ,0 ,0));
 
-        borderPane.setCenter(employeeList);
-        BorderPane.setMargin(employeeList, new Insets(10, 0, 0 ,0));
+        VBox rightMenu = new VBox(10);
+        Label employeeListLabel = new Label("Candidate Employees:");
+        rightMenu.getChildren().addAll(employeeListLabel, employeeList);
+        borderPane.setRight(rightMenu);
 
         VBox leftMenu = new VBox(10);
         Label skillsRequiredLabel = new Label("Skills Required:");
         leftMenu.getChildren().addAll(skillsRequiredLabel, skillsRequired);
-        leftMenu.setAlignment(Pos.CENTER);
         borderPane.setLeft(leftMenu);
         BorderPane.setMargin(leftMenu, new Insets(0, 10, 0 ,0));
 
-        Scene scene = new Scene(borderPane, 550, 400);
+        Scene scene = new Scene(borderPane, 525, 400);
         primaryStage.setScene(scene);
         // return to select screen on close
         primaryStage.setOnCloseRequest(e -> {
