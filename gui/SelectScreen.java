@@ -35,6 +35,7 @@ class SelectScreen {
         findJobButton.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
         findJobButton.setMinWidth(buttons.getPrefWidth());
         findJobButton.setMinHeight(75);
+        findJobButton.setOnAction(e -> new FindJobScreen(user, pass, primaryStage));
 
         Button findEmployeeButton = new Button("Find Employee");
         findEmployeeButton.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
