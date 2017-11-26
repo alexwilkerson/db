@@ -237,58 +237,148 @@ public enum Queries {
                     "                 (SELECT ks_code\n" +
                     "                  FROM has_Skill hs \n" +
                     "                  WHERE hs.per_id = p.per_id)));\n"),
-    //Q17("Query 17",
-    //        "List the skillID AND the number of people in the missing-one list for a\n" +
-    //                "given job code in the ascending order of the people counts.",
-    //"SELECT per_id, per_name, \n"+
-    //        "FROM person p\n"+
-    //        "WHERE 1 = (SELECT COUNT(ks_code)\n"+
-    //        "            FROM ((SELECT ks_code\n"+
-    //        "                  FROM required_skill\n"+
-    //        "                   WHERE job_code =1)\n"+
-    //        "                  MINUS\n"+
-    //        "                 (SELECT ks_code\n"+
-    //        "                  FROM has_skill hs \n"+
-    //        "                  where hs.per_id = p.per_id)));"),
-    //Q18("Query 18",
-    //        "Suppose there is a new job that hAS nobody qualified. List the persons\n" +
-    //                "who miss the least number of skills AND report the “least number”.",
-    //        "WITH ()\n" +
-    //                "missing_skills (per_id, num_missing) AS (\n" +
-    //                "    SELECT per_id, COUNT(ks_code)\n" +
-    //                "    FROM person p JOIN required_skills rs\n" +
-    //                "    WHERE p.required_skills IN (\n" +
-    //                "            SELECT *\n" +
-    //                "            FROM required_skills\n" +
-    //                "           MINUS\n" +
-    //                "            SELECT skill_code\n" +
-    //                "            FROM person_skill\n" +
-    //                "            WHERE person_code = P.person_code )\n" +
-    //                "    GROUP BY person_code ),\n" +
-    //                "min_num_missing (min_missing) as (\n" +
-    //                "    SELECT min(num_missing)\n" +
-    //                "    FROM missing_skills )\n" +
-    //                "  \n" +
-    //                "SELECT person_code, num_missing\n" +
-    //                "FROM missing_skills, min_num_missing\n" +
-    //                "WHERE num_missing = min_num_missing.min_missing"),
+    Q17("Query 17",
+            "List the skillID AND the number of people in the missing-one list for a\n" +
+                    "given job code in the ascending order of the people counts.",
+            "WITH skills_needed(ks_code) as (\n" +
+                "        SELECT ks_code\n" +
+                "        FROM required_skill\n" +
+                "        WHERE job_code = '1'),\n" +
+                "\n" +
+                "missing_skills(per_id, ms_count) AS (\n" +
+                "    SELECT per_id, COUNT(ks_code)\n" +
+                "    FROM person p, skills_needed\n" +
+                "    WHERE ks_code IN (\n" +
+                "        (SELECT ks_code\n" +
+                "        FROM skills_needed)\n" +
+                "        MINUS\n" +
+                "        (SELECT ks_code\n" +
+                "        FROM has_skill\n" +
+                "        WHERE per_id = p.per_id))\n" +
+                "    GROUP BY per_id)\n" +
+                "\n" +
+                "SELECT ks_code, COUNT(per_id) AS total_ms_count\n" +
+                "FROM missing_skills ms, skills_needed\n" +
+                "WHERE ks_code IN (\n" +
+                "    (SELECT ks_code\n" +
+                "    FROM skills_needed)\n" +
+                "    MINUS\n" +
+                "    (SELECT ks_code\n" +
+                "    FROM has_skill\n" +
+                "    WHERE per_id = ms.per_id))\n" +
+                "    AND ms_count = 1\n" +
+                "GROUP BY ks_code\n" +
+                "ORDER BY total_ms_count ASC;\n"),
+
+    Q18("Query 18",
+            "Suppose there is a new job that has nobody qualified. List the persons\n" +
+                    "who miss the least number of skills that ar required for this job AND report the “least number”.",
+            "WITH \n" +
+                    "\n" +
+                    "skills_needed(ks_code) AS (\n" +
+                    "    SELECT ks_code\n" +
+                    "    FROM required_skill\n" +
+                    "    WHERE job_code = 1),\n" +
+                    "\n" +
+                    "missing_skills(per_id, ms_count) AS (\n" +
+                    "    SELECT per_id, COUNT(ks_code)\n" +
+                    "    FROM person p, skills_needed sn\n" +
+                    "    WHERE sn.ks_code IN (\n" +
+                    "        (SELECT ks_code\n" +
+                    "        FROM required_skill)\n" +
+                    "        MINUS\n" +
+                    "        (SELECT ks_code\n" +
+                    "        FROM has_skill\n" +
+                    "        WHERE per_id = p.per_id))\n" +
+                    "    GROUP BY per_id),\n" +
+                    "\n" +
+                    "min_missing_ks(min_ms_count) AS (\n" +
+                    "    SELECT MIN(ms_count)\n" +
+                    "    FROM missing_skills)\n" +
+                    "\n" +
+                    "SELECT per_id, ms_count\n" +
+                    "FROM missing_skills JOIN min_missing_ks\n" +
+                    "ON ms_count = min_missing_ks.min_ms_count;"),
+
+    Q19("Query 19",
+            "For a specified job category and a given small number k, make a “missing-k” list that lists the people’s IDs and\n" +
+                    "the number of missing skills for the people who miss only up to k skills in the ascending order of missing skills.",
+                "WITH \n" +
+                        "\n" +
+                        "skills_needed(ks_code) AS (\n" +
+                        "    SELECT ks_code\n" +
+                        "    FROM skill_set\n" +
+                        "    WHERE cate_code = '1'),\n" +
+                        "\n" +
+                        "missing_skills(per_id, ms_count) AS (\n" +
+                        "    SELECT per_id, COUNT(ks_code)\n" +
+                        "    FROM person p, (SELECT ks_code\n" +
+                        "                    FROM skills_needed) sn\n" +
+                        "    WHERE sn.ks_code IN (\n" +
+                        "        (SELECT ks_code\n" +
+                        "        FROM skills_needed)\n" +
+                        "        MINUS\n" +
+                        "        (SELECT ks_code\n" +
+                        "        FROM has_skill\n" +
+                        "        WHERE per_id = p.per_id))\n" +
+                        "    GROUP BY per_id)\n" +
+                        "\n" +
+                        "SELECT per_id, ms_count\n" +
+                        "FROM missing_skills\n" +
+                        "WHERE ms_count <= 3 --k\n" +
+                        "ORDER BY ms_count ASC;"),
+    Q20("Query 20",
+            "Given a job code and its corresponding missing-k list specified in Question 19. Find every skill that is\n" +
+                    "needed by at least one person in the given missing-k list. List each skillID and the number of people who need it\n" +
+                    "in the descending order of the people counts.",
+                "WITH \n" +
+                        "\n" +
+                        "skills_needed(ks_code) as (\n" +
+                        "    SELECT ks_code\n" +
+                        "    FROM required_skill\n" +
+                        "    WHERE job_code = '1'),\n" +
+                        "\n" +
+                        "missing_skills(per_id, ms_count) AS (\n" +
+                        "    SELECT per_id, COUNT(ks_code)\n" +
+                        "    FROM person p, (SELECT ks_code\n" +
+                        "                    FROM skills_needed) sn\n" +
+                        "    WHERE sn.ks_code IN (\n" +
+                        "        (SELECT ks_code\n" +
+                        "        FROM skills_needed)\n" +
+                        "        MINUS\n" +
+                        "        (SELECT ks_code\n" +
+                        "        FROM has_skill\n" +
+                        "        WHERE per_id = p.per_id))\n" +
+                        "    GROUP BY per_id),\n" +
+                        "\n" +
+                        "missing_people(per_id, ms_count) AS (\n" +
+                        "    SELECT per_id, ms_count\n" +
+                        "    FROM missing_skills\n" +
+                        "    WHERE ms_count <= 3)\n" +
+                        "\n" +
+                        "SELECT ks_code, COUNT(per_id) as mp_count\n" +
+                        "FROM missing_people p, skills_needed\n" +
+                        "WHERE skills_needed.ks_code IN (\n" +
+                        "    SELECT ks_code\n" +
+                        "    FROM skills_needed\n" +
+                        "    MINUS\n" +
+                        "    SELECT ks_code\n" +
+                        "    FROM has_skill\n" +
+                        "    WHERE per_id = P.per_id)\n" +
+                        "GROUP BY ks_code\n" +
+                        "ORDER BY mp_count DESC;"),
     Q21("Query 21",
             "In a local or national crisis, we need to find all the people who once\n" +
                     "held a job of the special job category identifier.",
-            "WITH unemployed(per_id) AS\n" +
-                    "((SELECT per_id FROM person)\n" +
-                    "MINUS\n" +
-                    "(SELECT per_id FROM works WHERE end_date < CURRENT_DATE))\n" +
-                    "\n" +
-                    "SELECT per_id\n" +
-                    "FROM unemployed NATURAL JOIN job NATURAL JOIN hAS_category\n" +
-                    "WHERE cate_code = 1;"),
+            "SELECT per_id\n" +
+                    "FROM works NATURAL JOIN job NATURAL JOIN job_category\n" +
+                    "where cate_code = 1; \n"),
     Q22("Query 22",
             "Find all the unemployed people who once held a job of the given job identifier.",
             "WITH unemployed(per_id) AS\n" +
                     "((SELECT per_id FROM person)\n" +
                     "MINUS\n" +
-                    "(SELECT per_id FROM works WHERE end_date < CURRENT_DATE))\n" +
+                    "(SELECT per_id FROM works WHERE end_date >= CURRENT_DATE))\n" +
                     "\n" +
                     "SELECT per_id\n" +
                     "FROM unemployed NATURAL JOIN works\n" +
