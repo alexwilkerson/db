@@ -29,7 +29,7 @@ class SelectScreen {
         addPersonButton.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
         addPersonButton.setMinWidth(buttons.getPrefWidth());
         addPersonButton.setMinHeight(75);
-        addPersonButton.setOnAction(e -> new AddPersonScreen(user, pass, primaryStage));
+        addPersonButton.setOnAction(e -> new AddEmployeeScreen(user, pass, primaryStage));
 
         Button findJobButton = new Button("Find Job");
         findJobButton.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
