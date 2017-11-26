@@ -97,13 +97,13 @@ public class Main extends Application {
 
         stage.setScene(loginScene);
         try {
-            URL iconURL = Main.class.getResource("./logo.png");
+            URL iconURL = Main.class.getResource("./icon.png");
             java.awt.Image image = new ImageIcon(iconURL).getImage();
             com.apple.eawt.Application.getApplication().setDockIconImage(image);
         } catch (Exception e) {
             // Won't work on Windows or Linux.
         }
-        stage.getIcons().add(logo);
+        stage.getIcons().add(new Image("./icon.png"));
         stage.show();
 
         // CENTER ON SCREEN
