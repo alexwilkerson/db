@@ -382,7 +382,7 @@ public enum Queries {
                     "\n" +
                     "SELECT per_id\n" +
                     "FROM unemployed NATURAL JOIN works\n" +
-                    "WHERE  job_code = 8;"),
+                    "WHERE  job_code = '8';"),
     Q23("Query 23",
             "Find out the biggest employer in terms of number of employees or the\n" +
                     "total amount of salaries AND wages paid to employees.",
