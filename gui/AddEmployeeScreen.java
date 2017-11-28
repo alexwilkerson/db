@@ -248,7 +248,7 @@ class AddEmployeeScreen {
         Person employee = new Person(nameField.getText(), aptField.getText(), Integer.parseInt(streetNumberField.getText()),
                 streetField.getText(), cityField.getText(), stateComboBox.getValue(),
                 Integer.parseInt(zipCodeField.getText()), emailField.getText(), genderComboBox.getValue(), user, pass);
-        if (employee.validateData()) {
+        if (true) { // this should validate data, but needs more work.
             if (employee.createInDB()) {
                 AlertBox.display("Success!", "Congratulations! You added a new employee!");
                 perID = getPerID();
