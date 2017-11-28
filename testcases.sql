@@ -221,6 +221,13 @@ WHERE hs.per_id = p.per_id));
 -- “missing-one” list that lists people who miss only one skill for a specified
 -- job.
 
+--tc
+SELECT * FROM has_skill WHERE per_id = 2;
+SELECT * FROM has_skill WHERE per_id = 3;
+SELECT * FROM has_skill WHERE per_id = 5;
+SELECT * FROM has_skill WHERE per_id = 1;
+
+SELECT * FROM required_skill WHERE job_code = 1;
 SELECT per_id, per_name
 FROM person p
 WHERE 1 = (SELECT COUNT(ks_code)
@@ -235,7 +242,8 @@ WHERE 1 = (SELECT COUNT(ks_code)
        
 -- 17. List the skillID and the number of people in the missing-one list for a
 -- given job code in the ascending order of the people counts.
---- redo
+
+--rc refer to q16 tc
 
 WITH skills_needed(ks_code) as (
         SELECT ks_code
@@ -270,6 +278,8 @@ ORDER BY total_ms_count ASC;
 -- 18. Suppose there is a new job that has nobody qualified. List the persons
 -- who miss the least number of skills and report the “least number”.
 
+-- use other to tdo tc
+
 WITH 
 
 skills_needed(ks_code) AS (
@@ -302,12 +312,16 @@ ON ms_count = min_missing_ks.min_ms_count;
 -- skills for the people who miss only up to k skills in the ascending order of
 -- missing skills.
 
+-- use test cases from above. 
+
+SELECT * FROM has_skill WHERE per_id = 4;
+
 WITH 
 
 skills_needed(ks_code) AS (
     SELECT ks_code
-    FROM skill_set
-    WHERE cate_code = '1'),
+    FROM required_skill
+    WHERE job_code = 1), 
 
 missing_skills(per_id, ms_count) AS (
     SELECT per_id, COUNT(ks_code)
@@ -328,11 +342,16 @@ WHERE ms_count <= 3 --k
 ORDER BY ms_count ASC;
 
 
+
+
+
 -- 20. Given a job category code and its corresponding missing-k list specified
 -- in Question 19. Find every skill that is needed by at least one person in
 -- the given missing-k list. List each skillID and the number of people who
 -- need it
 -- in the descending order of the people counts.
+
+-- tc use 1 give same results as 17
 
 WITH 
 
@@ -357,7 +376,7 @@ missing_skills(per_id, ms_count) AS (
 missing_people(per_id, ms_count) AS (
     SELECT per_id, ms_count
     FROM missing_skills
-    WHERE ms_count <= 3)
+    WHERE ms_count <= 2)
 
 SELECT ks_code, COUNT(per_id) as mp_count
 FROM missing_people p, skills_needed

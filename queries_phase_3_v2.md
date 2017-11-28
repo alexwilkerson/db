@@ -1,6 +1,6 @@
 ---
 title: "Queries"
-uthor: Kevin Bongcasan, Alex Wilkerson
+author: Kevin Bongcasan, Alex Wilkerson
 date: Fall 2017
 ---
 

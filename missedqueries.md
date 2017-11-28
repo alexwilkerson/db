@@ -1,3 +1,9 @@
+---
+title: "Missed Queries"
+author: Kevin Bongcasan, Alex Wilkerson
+date: Fall 2017
+---
+
 # Missed Queries 
 
 The queries missed in phase_2
