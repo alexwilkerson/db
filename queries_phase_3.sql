@@ -42,7 +42,7 @@ from required_skill NATURAL JOIN works
 WHERE per_id = 1)
 MINUS
 (SELECT ks_code
-FROM has_skill NATURAL JOIN knowledge_skill 
+FROM has_skill
 WHERE per_id = 1);
 
 -- 7. List the required knowledge/skills of a job/ a job category in a readable
